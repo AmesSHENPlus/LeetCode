@@ -1,0 +1,24 @@
+public solution{
+Set<String> res = new HashSet<>();
+public List<String> crawl(String startUrl, HtmlParser htmlParser) {
+    String host = getUrl(startUrl);
+    res.add(startUrl);
+    dfs(startUrl, host, htmlParser);
+    return new ArrayList<>(res);
+}
+ 
+void dfs(String startUrl, String host, HtmlParser htmlParser){
+    List<String> urls = htmlParser.getUrls(startUrl);
+    for(String url : urls){
+        if(res.contains(url)||!getUrl(url).equals(host)){
+            continue;
+        }
+        res.add(url);
+        dfs(url, host, htmlParser);
+    }
+}
+public String getUrl(String url) {
+    String[] args = url.split("/");
+    return args[2];
+}
+}
